@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Importing Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Internal CSS styles -->
+    <style>
+        body {
+            background-color: #e9ecef; /* Light gray background */
+        }
+        .container {
+            padding-top: 50px; /* Padding at the top of the container */
+        }
+        .bid-form {
+            background: #ffffff; /* White background for the bid form */
+            padding: 20px; /* Padding inside the bid form */
+            border-radius: 8px; /* Rounded corners for the bid form */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect for the bid form */
+        }
+        .bid-form h1, .bid-form h5 {
+            color: #333; /* Dark grey color for form headings */
+        }
+        .highest-bid {
+            font-family: 'Arial', sans-serif; /* Font style for the highest bid display */
+            font-style: italic; /* Italicize the highest bid text */
+        }
+        .form-row {
+            margin-bottom: 15px; /* Margin at the bottom of each form row */
+        }
+        .form-label {
+            font-weight: bold; /* Bold font for labels */
+            text-align: left; /* Left align the text in labels */
+            margin-right: 10px; /* Margin on the right of labels */
+        }
+        .bid-added {
+            margin-top: 15px; /* Margin at the top of the bid added message */
+            color: #28a745; /* Green color indicating success */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="bid-form">
+            <h1>Real Time Bidding</h1>
+            <!-- Display the highest bid, using data passed from Flask app -->
+            <h5 class="highest-bid">Highest bid : {{ highest_bid }}</h5>
+            <!-- Form for submitting a bid -->
+            <form action = "/", method = 'post'>
+                <!-- Input field for name -->
+                <div class="form-row align-items-center justify-content-center">
+                    <label class="form-label" for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <!-- Input field for price -->
+                <div class="form-row align-items-center justify-content-center">
+                    <label class="form-label" for="price">Price:</label>
+                    <input type="text" class="form-control" id="price" name="price">
+                </div>
+                <!-- Submit button -->
+                <input class="btn btn-primary" type="submit" value="Bid">
+            </form>
+
+            <!-- Display message on successful bid addition -->
+            {% if bid_added %}
+            <h4 class="bid-added" id="bidMessage">Bid added!</h4>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- JavaScript for hiding the bid confirmation message after 30 seconds -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                var message = document.getElementById('bidMessage');
+                if (message) {
+                    message.style.display = 'none';
+                }
+            }, 30000); // Hide the message after 30 seconds
+        };
+    </script>
+</body>
+</html>
